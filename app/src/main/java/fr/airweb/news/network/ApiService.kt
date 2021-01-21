@@ -1,11 +1,11 @@
 package fr.airweb.news.network
 
-import fr.airweb.news.domain.NewsResult
-import retrofit2.Call
+import fr.airweb.news.model.domain.NewsResult
+import io.reactivex.Single
 import retrofit2.http.GET
 
 interface ApiService {
 
     @GET("/psg/psg.json")
-    fun fetchNews(): Call<NewsResult>
+    fun fetchNews(): Single<NewsResult>
 }

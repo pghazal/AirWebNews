@@ -1,4 +1,4 @@
-package fr.airweb.news.domain
+package fr.airweb.news.model.domain
 
 import com.google.gson.annotations.SerializedName
 
