@@ -25,6 +25,9 @@ class NewsRepository(private val newsDao: NewsDao, private val api: ApiService) 
             .doOnSuccess {
                 storeNewsInDb(it)
             }
+            .onErrorReturn {
+                ArrayList()
+            }
             .toObservable()
     }
 
