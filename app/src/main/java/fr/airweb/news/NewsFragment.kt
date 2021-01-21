@@ -1,5 +1,6 @@
 package fr.airweb.news
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -187,8 +188,18 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
                 return true
             }
 
+            R.id.contact -> {
+                showContactPage()
+                return true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showContactPage() {
+        val intent = Intent(context, ContactActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

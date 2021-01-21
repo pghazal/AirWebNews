@@ -39,4 +39,9 @@
                 android:title="@string/title" />
         </menu>
     </item>
+
+    <item
+        android:id="@+id/contact"
+        android:title="@string/contact"
+        app:showAsAction="never" />
 </menu>

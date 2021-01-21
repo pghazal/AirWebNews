@@ -11,5 +11,16 @@
     <string name="date">Date</string>
     <string name="title">Title</string>
 
+    <string name="contact">Contact</string>
+
     <string name="search_query_hint">search by titles</string>
+    <string name="contact_title">Titre: Airweb - Facilitateur de mobilité</string>
+    <string name="contact_postal_address">Adresse : 1 Rue Royale, Bureaux de Colline, 92210 Saint Cloud</string>
+    <string name="contact_email">Mail : contact@airweb.fr</string>
+    <string name="contact_phone_number">Tel : +33 1 76 61 65 10</string>
+
+    <string name="contact_airweb_email">contact@airweb.fr</string>
+    <string name="contact_airweb_phone_number">+33176616510</string>
+    <string name="contact_airweb_postal_address">1 Rue Royale, Bureaux de Colline, 92210 Saint Cloud</string>
+
 </resources>
