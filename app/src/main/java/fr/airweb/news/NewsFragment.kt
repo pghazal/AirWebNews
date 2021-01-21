@@ -3,6 +3,7 @@ package fr.airweb.news
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -53,6 +54,7 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
 
         adapter = NewsAdapter()
         configureRecyclerView(viewBinding)
+        configureSearchView(viewBinding)
     }
 
     private fun configureRecyclerView(viewBinding: FragmentNewsBinding) {
@@ -76,6 +78,27 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
             }
     }
 
+    private fun configureSearchView(viewBinding: FragmentNewsBinding) {
+        val searchView = viewBinding.searchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
+
+    private fun clearSearchView() {
+        viewBinding.searchView.setQuery("", false)
+        viewBinding.searchView.clearFocus()
+    }
+
     override fun onRefresh() {
         getAndDisplayNews()
     }
@@ -85,6 +108,7 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 adapter.submitList(it)
+                adapter.filter.items = it
             }, {
                 // TODO handle
                 Log.e(TAG, it.toString())
@@ -105,18 +129,21 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_news -> {
+                clearSearchView()
                 newsViewModel.setFilter(NewsType.NEWS)
                 getAndDisplayNews()
                 return true
             }
 
             R.id.filter_actuality -> {
+                clearSearchView()
                 newsViewModel.setFilter(NewsType.ACTUALITY)
                 getAndDisplayNews()
                 return true
             }
 
             R.id.filter_hot -> {
+                clearSearchView()
                 newsViewModel.setFilter(NewsType.HOT)
                 getAndDisplayNews()
                 return true

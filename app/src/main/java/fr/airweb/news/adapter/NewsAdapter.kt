@@ -9,6 +9,10 @@ import fr.airweb.news.model.domain.News
 
 class NewsAdapter : ListAdapter<News, NewsViewHolder>(DiffUtilCallback) {
 
+    val filter: NewsTitleFilter by lazy {
+        NewsTitleFilter(this)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_view_news, parent, false)

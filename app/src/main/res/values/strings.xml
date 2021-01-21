@@ -10,4 +10,6 @@
     <string name="none">None</string>
     <string name="date">Date</string>
     <string name="title">Title</string>
+
+    <string name="search_query_hint">search by titles</string>
 </resources>
