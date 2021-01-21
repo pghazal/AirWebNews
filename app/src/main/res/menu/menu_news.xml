@@ -20,4 +20,23 @@
                 android:title="@string/hot" />
         </menu>
     </item>
+
+    <item
+        android:icon="@drawable/ic_sort"
+        android:title="@string/text_menu_sort"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/sort_by_none"
+                android:title="@string/none" />
+
+            <item
+                android:id="@+id/sort_by_date"
+                android:title="@string/date" />
+
+            <item
+                android:id="@+id/sort_by_title"
+                android:title="@string/title" />
+        </menu>
+    </item>
 </menu>

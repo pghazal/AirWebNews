@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import fr.airweb.news.adapter.NewsAdapter
 import fr.airweb.news.databinding.FragmentNewsBinding
+import fr.airweb.news.model.SortBy
 import fr.airweb.news.model.domain.News
 import fr.airweb.news.model.domain.NewsType
 import fr.airweb.news.viewmodel.NewsViewModel
@@ -117,6 +118,24 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
 
             R.id.filter_hot -> {
                 newsViewModel.setFilter(NewsType.HOT)
+                getAndDisplayNews()
+                return true
+            }
+
+            R.id.sort_by_none -> {
+                newsViewModel.sortBy(SortBy.NONE)
+                getAndDisplayNews()
+                return true
+            }
+
+            R.id.sort_by_date -> {
+                newsViewModel.sortBy(SortBy.DATE)
+                getAndDisplayNews()
+                return true
+            }
+
+            R.id.sort_by_title -> {
+                newsViewModel.sortBy(SortBy.TITLE)
                 getAndDisplayNews()
                 return true
             }

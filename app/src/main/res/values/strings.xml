@@ -5,4 +5,9 @@
     <string name="news">News</string>
     <string name="actuality">Actuality</string>
     <string name="hot">Hot</string>
+
+    <string name="text_menu_sort">Sort by</string>
+    <string name="none">None</string>
+    <string name="date">Date</string>
+    <string name="title">Title</string>
 </resources>
