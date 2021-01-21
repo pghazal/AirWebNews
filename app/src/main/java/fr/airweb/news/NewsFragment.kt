@@ -10,6 +10,7 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.transition.TransitionInflater
 import fr.airweb.news.adapter.NewsAdapter
 import fr.airweb.news.adapter.NewsClickListener
 import fr.airweb.news.databinding.FragmentNewsBinding
