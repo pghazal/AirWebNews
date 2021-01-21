@@ -57,7 +57,7 @@ class ContactActivity : AppCompatActivity() {
     }
 
     private fun startDirections(address: String) {
-        val gmmIntentUri = Uri.parse("google.navigation:q=$address")
+        val gmmIntentUri = Uri.parse("google.navigation:q=$address&mode=b")
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
         mapIntent.resolveActivity(packageManager)?.let {
