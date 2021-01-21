@@ -39,4 +39,8 @@ class NewsRepository(private val newsDao: NewsDao, private val api: ApiService) 
             .observeOn(Schedulers.io())
             .subscribe()
     }
+
+    fun getNewsById(id: Int): Observable<News> {
+        return newsDao.getNewsById(id).toObservable()
+    }
 }

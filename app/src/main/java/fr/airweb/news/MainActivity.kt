@@ -2,6 +2,8 @@ package fr.airweb.news
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import fr.airweb.news.network.RestClient
 import fr.airweb.news.repository.AppDatabase
@@ -17,7 +19,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        showNewsFragment(savedInstanceState)
+
         initViewModel()
+    }
+
+    private fun showNewsFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<NewsFragment>(R.id.fragment_container_view)
+            }
+        }
     }
 
     private fun initViewModel() {

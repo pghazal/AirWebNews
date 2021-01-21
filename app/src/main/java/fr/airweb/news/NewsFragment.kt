@@ -5,19 +5,24 @@ import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import fr.airweb.news.adapter.NewsAdapter
+import fr.airweb.news.adapter.NewsClickListener
 import fr.airweb.news.databinding.FragmentNewsBinding
 import fr.airweb.news.model.SortBy
 import fr.airweb.news.model.domain.News
 import fr.airweb.news.model.domain.NewsType
+import fr.airweb.news.utils.Arguments
 import fr.airweb.news.viewmodel.NewsViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.OnRefreshListener {
+class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.OnRefreshListener,
+    NewsClickListener {
 
     private var _viewBinding: FragmentNewsBinding? = null
     private val viewBinding get() = _viewBinding!!
@@ -52,9 +57,24 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
     private fun configureViews(viewBinding: FragmentNewsBinding) {
         viewBinding.swipeRefreshLayout.setOnRefreshListener(this)
 
-        adapter = NewsAdapter()
+        adapter = NewsAdapter(this)
         configureRecyclerView(viewBinding)
         configureSearchView(viewBinding)
+    }
+
+    override fun onNewsClicked(news: News) {
+        showDetailsFragment(news.nid)
+    }
+
+    private fun showDetailsFragment(id: Int) {
+        parentFragmentManager.commit {
+            val args = Bundle()
+            args.putInt(Arguments.ARGS_NEWS_ID, id)
+
+            add<DetailsFragment>(R.id.fragment_container_view, args = args)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
     }
 
     private fun configureRecyclerView(viewBinding: FragmentNewsBinding) {

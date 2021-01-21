@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        card_view:cardCornerRadius="4dp">
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/colorAccent"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPadding="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_alignParentStart="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="16dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop" />
 
             <TextView
@@ -31,8 +36,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imageView"
+                android:ellipsize="end"
                 android:lines="1"
-                android:textStyle="bold" />
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Text" />
 
             <TextView
                 android:id="@+id/contentView"
@@ -41,7 +50,9 @@
                 android:layout_below="@+id/titleView"
                 android:layout_toEndOf="@+id/imageView"
                 android:ellipsize="end"
-                android:lines="3" />
+                android:lines="3"
+                android:textColor="@color/white"
+                tools:text="Content" />
 
         </RelativeLayout>
 

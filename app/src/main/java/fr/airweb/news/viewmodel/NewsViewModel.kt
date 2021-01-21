@@ -41,6 +41,10 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             .toObservable()
     }
 
+    fun getNewsById(id: Int): Observable<News> {
+        return newsRepository.getNewsById(id)
+    }
+
     fun setFilter(newsFilter: NewsType) {
         this.newsTypeFilter = newsFilter
     }

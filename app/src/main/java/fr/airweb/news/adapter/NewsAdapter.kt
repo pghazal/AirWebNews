@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import fr.airweb.news.R
 import fr.airweb.news.model.domain.News
 
-class NewsAdapter : ListAdapter<News, NewsViewHolder>(DiffUtilCallback) {
+class NewsAdapter(private val newsClickListener: NewsClickListener) : ListAdapter<News, NewsViewHolder>(DiffUtilCallback) {
 
     val filter: NewsTitleFilter by lazy {
         NewsTitleFilter(this)
@@ -17,7 +17,7 @@ class NewsAdapter : ListAdapter<News, NewsViewHolder>(DiffUtilCallback) {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_view_news, parent, false)
 
-        return NewsViewHolder(view)
+        return NewsViewHolder(view, newsClickListener)
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {

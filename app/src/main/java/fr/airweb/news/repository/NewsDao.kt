@@ -15,4 +15,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(news: List<News>)
+
+    @Query("SELECT * FROM news WHERE nid= :id")
+    fun getNewsById(id: Int): Single<News>
 }
