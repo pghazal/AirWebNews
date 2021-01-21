@@ -1,61 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/colorAccent"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="@dimen/half_base_margin">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="@color/colorAccent"
-        card_view:cardCornerRadius="8dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:contentPadding="@dimen/half_base_margin">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/news_image_size"
+            android:layout_height="@dimen/news_image_size"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/half_base_margin"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imageView"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Text" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/news_image_size"
-                android:layout_height="@dimen/news_image_size"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/half_base_margin"
-                android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleView"
+            android:layout_toEndOf="@+id/imageView"
+            android:ellipsize="end"
+            android:lines="3"
+            android:textColor="@color/white"
+            tools:text="Content" />
 
-            <TextView
-                android:id="@+id/titleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/imageView"
-                android:ellipsize="end"
-                android:lines="1"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="Text" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/contentView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/titleView"
-                android:layout_toEndOf="@+id/imageView"
-                android:ellipsize="end"
-                android:lines="3"
-                android:textColor="@color/white"
-                tools:text="Content" />
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</FrameLayout>
+</androidx.cardview.widget.CardView>
