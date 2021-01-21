@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import fr.airweb.news.adapter.NewsAdapter
 import fr.airweb.news.databinding.FragmentNewsBinding
 import fr.airweb.news.model.domain.News
+import fr.airweb.news.model.domain.NewsType
 import fr.airweb.news.viewmodel.NewsViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,7 +55,7 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewBinding.recyclerView.adapter = adapter
 
-        newsObservable = newsViewModel.getNews()
+        newsObservable = newsViewModel.getNews(NewsType.NEWS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
