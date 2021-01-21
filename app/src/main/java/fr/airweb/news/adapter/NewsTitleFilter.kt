@@ -34,6 +34,10 @@ class NewsTitleFilter(private val adapter: NewsAdapter) : Filter() {
     }
 
     override fun publishResults(constraint: CharSequence, results: FilterResults) {
+        if (results.values == null) {
+            return
+        }
+
         adapter.submitList(results.values as List<News>)
     }
 }
