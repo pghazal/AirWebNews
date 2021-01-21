@@ -8,14 +8,20 @@ import io.reactivex.Observable
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
-    fun getNews(newsType: NewsType): Observable<List<News>> {
+    private var newsTypeFilter: NewsType = NewsType.NEWS
+
+    fun getNews(): Observable<List<News>> {
         return newsRepository.getNews()
             .flatMap {
                 Observable.fromIterable(it)
             }
-            .filter { news -> news.type == newsType }
+            .filter { news -> news.type == newsTypeFilter }
             .distinct()
             .toList()
             .toObservable()
+    }
+
+    fun setFilter(newsFilter: NewsType) {
+        this.newsTypeFilter = newsFilter
     }
 }

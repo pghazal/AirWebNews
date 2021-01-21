@@ -2,9 +2,7 @@ package fr.airweb.news
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -26,6 +24,11 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
 
     private val newsViewModel: NewsViewModel by activityViewModels()
     private lateinit var newsObservable: Observable<List<News>>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +58,10 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
         viewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
         viewBinding.recyclerView.adapter = adapter
 
-        newsObservable = newsViewModel.getNews(NewsType.NEWS)
+        // Set initial filter
+        newsViewModel.setFilter(NewsType.NEWS)
+
+        newsObservable = newsViewModel.getNews()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
@@ -88,6 +94,35 @@ class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.On
 
     private fun showLoader(show: Boolean) {
         viewBinding.swipeRefreshLayout.isRefreshing = show
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_news, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter_news -> {
+                newsViewModel.setFilter(NewsType.NEWS)
+                getAndDisplayNews()
+                return true
+            }
+
+            R.id.filter_actuality -> {
+                newsViewModel.setFilter(NewsType.ACTUALITY)
+                getAndDisplayNews()
+                return true
+            }
+
+            R.id.filter_hot -> {
+                newsViewModel.setFilter(NewsType.HOT)
+                getAndDisplayNews()
+                return true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

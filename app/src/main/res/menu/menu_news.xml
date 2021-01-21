@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_filter"
+        android:title="@string/text_menu_filter"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/filter_news"
+                android:title="@string/news" />
+
+            <item
+                android:id="@+id/filter_actuality"
+                android:title="@string/actuality" />
+
+            <item
+                android:id="@+id/filter_hot"
+                android:title="@string/hot" />
+        </menu>
+    </item>
+</menu>

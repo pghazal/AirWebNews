@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AirWeb News</string>
+
+    <string name="text_menu_filter">Filter</string>
+    <string name="news">News</string>
+    <string name="actuality">Actuality</string>
+    <string name="hot">Hot</string>
 </resources>
