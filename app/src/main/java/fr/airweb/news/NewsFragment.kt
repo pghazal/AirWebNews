@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import fr.airweb.news.adapter.NewsAdapter
 import fr.airweb.news.databinding.FragmentNewsBinding
+import fr.airweb.news.model.domain.News
 import fr.airweb.news.viewmodel.NewsViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class NewsFragment : BaseFragment(R.layout.fragment_news) {
+class NewsFragment : BaseFragment(R.layout.fragment_news), SwipeRefreshLayout.OnRefreshListener {
 
     private var _viewBinding: FragmentNewsBinding? = null
     private val viewBinding get() = _viewBinding!!
@@ -21,6 +24,7 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
     private lateinit var adapter: NewsAdapter
 
     private val newsViewModel: NewsViewModel by activityViewModels()
+    private lateinit var newsObservable: Observable<List<News>>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,16 +35,45 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
         return viewBinding.root
     }
 
-    private fun configureViews(viewBinding: FragmentNewsBinding) {
-        adapter = NewsAdapter()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
-        viewBinding.recyclerView.adapter = adapter
+        configureViews(viewBinding)
+
+        getAndDisplayNews()
     }
 
-    private fun subscribeNewsViewModel() {
-        val disposable = newsViewModel.getNews()
+    private fun configureViews(viewBinding: FragmentNewsBinding) {
+        viewBinding.swipeRefreshLayout.setOnRefreshListener(this)
+
+        adapter = NewsAdapter()
+        configureRecyclerView(viewBinding)
+    }
+
+    private fun configureRecyclerView(viewBinding: FragmentNewsBinding) {
+        viewBinding.recyclerView.layoutManager = LinearLayoutManager(context)
+        viewBinding.recyclerView.adapter = adapter
+
+        newsObservable = newsViewModel.getNews()
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                showLoader(true)
+            }
+            .doOnComplete {
+                showLoader(false)
+            }
+            .doOnError {
+                showLoader(false)
+            }
+    }
+
+    override fun onRefresh() {
+        getAndDisplayNews()
+    }
+
+    private fun getAndDisplayNews() {
+        val disposable = newsObservable
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 adapter.submitList(it)
@@ -52,12 +85,8 @@ class NewsFragment : BaseFragment(R.layout.fragment_news) {
         compositeDisposable.add(disposable)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        configureViews(viewBinding)
-
-        subscribeNewsViewModel()
+    private fun showLoader(show: Boolean) {
+        viewBinding.swipeRefreshLayout.isRefreshing = show
     }
 
     override fun onDestroyView() {
